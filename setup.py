@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
   name='subprocess_loop',
-  version='1.0.0',
+  version='1.0.7',
   author='dev mx',
   description='subprocess exchange with stdio',
   url='https://github.com/maxavaiable/py-subprocess-loop',

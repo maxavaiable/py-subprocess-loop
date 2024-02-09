@@ -25,7 +25,7 @@ class _StringIO:
     def on_write(self, callback):
         self._on_write = callback
 
-class SubprocessLoopChild:
+class Child:
 
     _stdout = _StringIO()
     _stdin = io.StringIO()
@@ -37,22 +37,22 @@ class SubprocessLoopChild:
     @staticmethod
     def run(on_request):
 
-        SubprocessLoopChild._stdout.on_write(SubprocessLoopChild._on_default_write)
+        Child._stdout.on_write(Child._on_default_write)
 
         while(True):
-            request_json = SubprocessLoopChild._orig_stdin.readline()
+            request_json = Child._orig_stdin.readline()
             if (len(request_json)==0):
                 break
             request = json.loads(request_json)
             response_data = on_request(request["data"])
             response = {"id": request["id"], "data": response_data}
-            SubprocessLoopChild._orig_stdout.write(json.dumps(response))
-            SubprocessLoopChild._orig_stdout.flush()
+            Child._orig_stdout.write(json.dumps(response))
+            Child._orig_stdout.flush()
         pass
 
     @staticmethod
     def _on_default_write(data):
         response = {"stdout": data}
-        SubprocessLoopChild._orig_stdout.write(json.dumps(response))
-        SubprocessLoopChild._orig_stdout.flush()
+        Child._orig_stdout.write(json.dumps(response))
+        Child._orig_stdout.flush()
 
