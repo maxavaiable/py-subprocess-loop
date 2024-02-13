@@ -25,6 +25,9 @@ class _StringIO:
     def on_write(self, callback):
         self._on_write = callback
 
+    def _on_write(self, callback):
+        self.on_write(callback)
+
 class Child:
 
     _stdout = _StringIO()
