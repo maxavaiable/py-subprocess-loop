@@ -40,8 +40,6 @@ class Child:
     @staticmethod
     def run(on_request):
 
-        Child._stdout.on_write(Child._on_default_write)
-
         while(True):
             request_json = Child._orig_stdin.readline()
             if (len(request_json)==0):
@@ -59,3 +57,4 @@ class Child:
         Child._orig_stdout.write(json.dumps(response))
         Child._orig_stdout.flush()
 
+Child._stdout.on_write(Child._on_default_write)
